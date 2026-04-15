@@ -73,7 +73,6 @@ function Users({ token }) {
 
   const getRoleLabel = (role) => {
     const roles = {
-      'admin': 'Адміністратор',
       'manager': 'Менеджер',
       'cashier': 'Касир'
     };
@@ -94,7 +93,7 @@ function Users({ token }) {
           <thead>
             <tr>
               <th>ID</th>
-              <th>ПІБ</th>
+              <th>Ім'я</th>
               <th>Email</th>
               <th>Роль</th>
               <th>Дата реєстрації</th>

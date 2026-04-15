@@ -1,10 +1,11 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import Navbar from './NavBar';
-import Products from './Products';
+import Products from './StoreProducts';
 import Reports from './Reports';
 import Users from './Users';
 import Cashier from './Cashier';
+
 
 function Dashboard({ token, user, onLogout }) {
   return (
@@ -14,13 +15,13 @@ function Dashboard({ token, user, onLogout }) {
         <div style={{ display: 'flex', gap: '20px', marginBottom: '20px', flexWrap: 'wrap' }}>
           <Link to="/" className="btn btn-primary">Товари</Link>
 
-          {(user?.role === 'cashier' || user?.role === 'admin') && (
+          {(user?.role === 'Cashier') && (
             <Link to="/cashier" className="btn btn-success">Каса</Link>
           )}
 
           <Link to="/reports" className="btn btn-primary">Звіти</Link>
 
-          {user?.role === 'admin' && (
+              {user?.role === 'Manager' && (
             <Link to="/users" className="btn btn-primary">Користувачі</Link>
           )}
         </div>

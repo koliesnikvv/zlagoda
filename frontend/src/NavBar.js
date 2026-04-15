@@ -20,7 +20,7 @@ function NavBar({ user, onLogout }) {
           <h2 style={{ color: '#c1680e' }}>ZLAGODA</h2>
         </div>
         <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-          <span>{getRole(user?.role)} {user?.full_name} ({user?.role === 'admin' ? 'Адмін' : user?.role === 'manager' ? 'Менеджер' : 'Касир'})</span>
+          <span>{getRole(user?.role)} {user?.name} {user?.surname} ({ user?.role === 'Manager' ? 'Менеджер' : 'Касир'})</span>
           <span style={{ fontSize: '12px', color: '#666' }}>{user?.email}</span>
           <button className="btn btn-danger" onClick={onLogout}>Вийти</button>
         </div>
