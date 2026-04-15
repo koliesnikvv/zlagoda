@@ -13,7 +13,7 @@ function Users({ token }) {
 
   const loadUsers = async () => {
     try {
-      const res = await fetch('http://127.0.0.1:8000/admin/users', {
+      const res = await fetch('http://127.0.0.1:8000/users', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -50,7 +50,7 @@ function Users({ token }) {
   const handleDelete = async (id) => {
     if (window.confirm('Ви впевнені?')) {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/admin/users/${id}`, {
+        const res = await fetch(`http://127.0.0.1:8000/users/${id}`, {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }
         });
