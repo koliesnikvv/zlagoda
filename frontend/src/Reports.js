@@ -11,7 +11,9 @@ function Reports({ token }) {
     try {
       const [productsRes, salesRes] = await Promise.all([
         fetch('http://127.0.0.1:8000/products'),
-        fetch('http://127.0.0.1:8000/sales')
+        fetch('http://127.0.0.1:8000/sales', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
       ]);
 
       const productsData = await productsRes.json();
@@ -26,7 +28,7 @@ function Reports({ token }) {
 
   const totalValue = products.reduce((sum, p) => sum + (p.price * p.stock), 0);
   const totalItems = products.reduce((sum, p) => sum + p.stock, 0);
-  const totalSales = sales.reduce((sum, s) => sum + s.total, 0);
+  const totalSales = !!sales.length ? sales?.reduce((sum, s) => sum + s.total, 0) : 0;
   const currentDate = new Date().toLocaleString('uk-UA', {
     year: 'numeric',
     month: 'long',
@@ -126,9 +128,9 @@ function Reports({ token }) {
                 <tr>
                   <td>${p.id}</td>
                   <td>${p.name}</td>
-                  <td>${p.price.toFixed(2)}</td>
+                  <td>${p.price?.toFixed(2)}</td>
                   <td>${p.stock}</td>
-                  <td>${(p.price * p.stock).toFixed(2)}</td>
+                  <td>${(p.price * p.stock)?.toFixed(2)}</td>
                 </tr>
               `).join('')}
             </tbody>
@@ -160,7 +162,7 @@ function Reports({ token }) {
                   <td>${s.cashier}</td>
                   <td>${s.product}</td>
                   <td>${s.quantity}</td>
-                  <td>${s.total.toFixed(2)}</td>
+                  <td>${s.total?.toFixed(2)}</td>
                   <td>${new Date(s.date).toLocaleString('uk-UA')}</td>
                 </tr>
               `).join('')}
@@ -169,7 +171,7 @@ function Reports({ token }) {
           
           <div class="summary">
             <h3>Підсумки по продажах:</h3>
-            <p>Загальна сума продажів: ${totalSales.toFixed(2)} грн</p>
+            <p>Загальна сума продажів: ${totalSales?.toFixed(2)} грн</p>
             <p>Кількість операцій: ${sales.length}</p>
           </div>
           
@@ -208,13 +210,13 @@ function Reports({ token }) {
               <strong>Товарів:</strong> {products.length}
             </div>
             <div>
-              <strong>Вартість складу:</strong> {totalValue.toFixed(2)} грн
+              <strong>Вартість складу:</strong> {totalValue?.toFixed(2)} грн
             </div>
             <div>
               <strong>Продажів:</strong> {sales.length}
             </div>
             <div>
-              <strong>Сума продажів:</strong> {totalSales.toFixed(2)} грн
+              <strong>Сума продажів:</strong> {totalSales?.toFixed(2)} грн
             </div>
           </div>
         </div>
