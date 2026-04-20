@@ -40,4 +40,17 @@ export class ReportsController {
   productsReport() {
     return this.service.inventoryReport();
   }
+
+  @Get('analytics/category-sales')
+  categorySales(
+    @Query('start_date') startDate: string,
+    @Query('end_date') endDate: string,
+  ) {
+    return this.service.categorySalesReport(startDate, endDate);
+  }
+
+  @Get('analytics/customers-bought-all')
+  customersBoughtAll(@Query('category_number') categoryNumber: string) {
+    return this.service.customersBoughtAllInCategory(Number(categoryNumber));
+  }
 }

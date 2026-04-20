@@ -60,15 +60,3 @@ export type TPutCardPayload = {
 export type TPutCardApi = TQuery<TPutCardPayload, { message: string }>
 
 export type TDeleteCardApi = TQuery<{ card_number: string }, { message: string }>
-
-export type TResponse<T> = Promise<{
-  data: T;
-  status: number;
-}>;
-
-export type TLoyalCustomer = {
-  cust_surname: string;
-  cust_name: string;
-  card_number: string;
-  percent: number;
-};

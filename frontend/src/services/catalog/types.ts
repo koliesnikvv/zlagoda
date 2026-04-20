@@ -46,4 +46,3 @@ export type TPostCategoryApi = TQuery<{ category_name: string }, { category_numb
 export type TPutCategoryApi = TQuery<{ category_number: number; category_name: string }, { message: string }>
 
 export type TDeleteCategoryApi = TQuery<{ category_number: number }, { message: string }>
-

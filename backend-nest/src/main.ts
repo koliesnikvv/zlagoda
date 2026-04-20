@@ -11,8 +11,8 @@ async function bootstrap() {
   app.use(morgan('dev'));
 
   const config = new DocumentBuilder()
-    .setTitle('Zlagoda')
-    .setDescription('Suoermarket API')
+    .setTitle('TEST')
+    .setDescription('The cats API description')
     .setVersion('1.0')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);

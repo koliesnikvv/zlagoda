@@ -31,10 +31,4 @@ export class CustomerCardsService {
   ): TResponse<T.TDeleteCardApi['response']> {
     return apiPrivate.delete(`/customer-cards/${data.card_number}`)
   }
-
-static async getLoyalCustomers(manufacturer: string): TResponse<T.TCustomerCard[]> {
-  return apiPrivate.get(`/customer-cards/loyal-analytics`, {
-    params: { manufacturer }
-  });
-}
 }

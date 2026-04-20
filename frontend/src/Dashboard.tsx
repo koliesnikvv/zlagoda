@@ -9,6 +9,7 @@ import Users from "./Users";
 import Cashier from "./Cashier";
 import CustomerCards from "./CustomerCards";
 import Profile from "./Profile";
+import Analytics from "./Analytics";
 import { useUserStore } from "./store";
 
 function Dashboard(): React.JSX.Element {
@@ -56,6 +57,12 @@ function Dashboard(): React.JSX.Element {
             Звіти
           </Link>
 
+          {isManager && (
+            <Link to="/analytics" className="btn btn-primary">
+              Аналітика
+            </Link>
+          )}
+
           <Link to="/customer-cards" className="btn btn-primary">
             Постійні клієнти
           </Link>
@@ -73,6 +80,7 @@ function Dashboard(): React.JSX.Element {
           <Route path="/categories" element={<Categories />} />
           <Route path="/cashier" element={<Cashier />} />
           <Route path="/reports" element={<Reports />} />
+          <Route path="/analytics" element={<Analytics />} />
           <Route path="/customer-cards" element={<CustomerCards />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/users" element={<Users />} />

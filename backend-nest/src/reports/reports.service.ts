@@ -63,6 +63,67 @@ export class ReportsService {
     }));
   }
 
+  async categorySalesReport(startDate: string, endDate: string) {
+    const rows: any[] = await this.dataSource.query(
+      `SELECT cat.category_number,
+              cat.category_name,
+              COUNT(DISTINCT c.check_number)          AS checks_count,
+              SUM(s.product_number)                   AS total_units,
+              SUM(s.product_number * s.selling_price) AS total_revenue
+       FROM Category cat
+       JOIN Product p        ON p.category_number = cat.category_number
+       JOIN Store_Product sp ON sp.id_product     = p.id_product
+       JOIN Sale s           ON s.UPC             = sp.UPC
+       JOIN "Check" c        ON c.check_number    = s.check_number
+       WHERE c.print_date >= $1 AND c.print_date < $2
+       GROUP BY cat.category_number, cat.category_name
+       HAVING SUM(s.product_number) > 0
+       ORDER BY total_revenue DESC`,
+      [startDate, this.addDay(endDate)],
+    );
+    return rows.map((r) => ({
+      category_number: Number(r.category_number),
+      category_name: r.category_name,
+      checks_count: Number(r.checks_count),
+      total_units: Number(r.total_units),
+      total_revenue: Number(r.total_revenue),
+    }));
+  }
+
+  async customersBoughtAllInCategory(categoryNumber: number) {
+    const rows: any[] = await this.dataSource.query(
+      `SELECT cc.card_number,
+              cc.cust_surname,
+              cc.cust_name,
+              cc.cust_patronymic,
+              cc.percent
+       FROM Customer_Card cc
+       WHERE NOT EXISTS (
+           SELECT 1
+           FROM Product p
+           WHERE p.category_number = $1
+             AND NOT EXISTS (
+                 SELECT 1
+                 FROM Sale s
+                 JOIN Store_Product sp ON sp.UPC = s.UPC
+                 JOIN "Check" c        ON c.check_number = s.check_number
+                 WHERE sp.id_product = p.id_product
+                   AND c.card_number = cc.card_number
+             )
+       )
+         AND EXISTS (SELECT 1 FROM Product p WHERE p.category_number = $1)
+       ORDER BY cc.cust_surname, cc.cust_name`,
+      [categoryNumber],
+    );
+    return rows.map((r) => ({
+      card_number: r.card_number,
+      cust_surname: r.cust_surname,
+      cust_name: r.cust_name,
+      cust_patronymic: r.cust_patronymic,
+      percent: Number(r.percent),
+    }));
+  }
+
   async inventoryReport() {
     const rows: any[] = await this.dataSource.query(
       `SELECT sp.UPC, p.product_name, sp.selling_price,

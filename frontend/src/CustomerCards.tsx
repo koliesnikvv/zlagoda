@@ -8,7 +8,6 @@ import {
   TCustomerCardFormData,
 } from "./services";
 import { SortableTh, SortState, nextSort } from "./components/SortableTh";
-import { Link } from 'react-router-dom';
 
 const emptyForm: TCustomerCardFormData = {
   card_number: "",
@@ -172,11 +171,6 @@ function CustomerCards(): React.JSX.Element {
           onChange={(e) => setSearch(e.target.value)}
           style={{ flex: 1 }}
         />
-          <li>
-          <Link to="/loyal-customers" className="btn-nav">
-            Аналітика фанатів бренду
-          </Link>
-        </li>
         <button type="submit" className="btn btn-primary">
           Пошук
         </button>
@@ -191,8 +185,6 @@ function CustomerCards(): React.JSX.Element {
           >
             Скинути
           </button>
-
-
         )}
       </form>
 
@@ -279,7 +271,6 @@ function CustomerCards(): React.JSX.Element {
           </tbody>
         </table>
       </div>
-
 
       {modalOpen && (
         <div className="modal" onClick={closeModal}>

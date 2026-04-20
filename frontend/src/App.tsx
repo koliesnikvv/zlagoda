@@ -11,7 +11,6 @@ import Login from "./Login";
 import Dashboard from "./Dashboard";
 import "./styles.css";
 import { useUserStore } from "./store/user/store";
-import LoyalCustomers from './LoyalCustomers';
 
 function App(): React.JSX.Element {
   const { user } = useUserStore();
@@ -28,7 +27,6 @@ function App(): React.JSX.Element {
           path="/*"
           element={user ? <Dashboard /> : <Navigate to="/login" />}
         />
-          <Route path="/loyal-customers" element={<LoyalCustomers />} />
       </Routes>
     </Router>
   );
